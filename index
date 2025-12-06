@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Hangman Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="game-container">
+    <h1>Animated Hangman</h1>
+
+    <!-- Difficulty Selector -->
+    <label for="difficulty">Difficulty:</label>
+    <select id="difficulty">
+        <option value="easy">Easy (10 lives)</option>
+        <option value="medium">Medium (7 lives)</option>
+        <option value="hard">Hard (5 lives)</option>
+    </select>
+
+    <!-- Hangman Character -->
+    <div class="hangman">
+        <div id="pole"></div>
+        <div id="head" class="hidden"></div>
+        <div id="body" class="hidden"></div>
+        <div id="arm-left" class="hidden"></div>
+        <div id="arm-right" class="hidden"></div>
+        <div id="leg-left" class="hidden"></div>
+        <div id="leg-right" class="hidden"></div>
+    </div>
+
+    <!-- Word Display -->
+    <div id="wordDisplay" class="word-display">_ _ _ _</div>
+
+    <!-- Input -->
+    <input id="guessInput" maxlength="1" placeholder="Enter a letter">
+    <button onclick="makeGuess()">Guess</button>
+
+    <!-- Lives -->
+    <p id="livesText">Lives: 10</p>
+
+    <!-- Messages -->
+    <div id="message"></div>
+
+    <!-- Restart -->
+    <button onclick="startGame()">Restart Game</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
