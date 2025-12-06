@@ -1,0 +1,111 @@
+body {
+    background: #f4f4f4;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+    margin: 0;
+}
+
+.game-container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 400px;
+    text-align: center;
+}
+
+/* Word */
+.word-display {
+    font-size: 2rem;
+    margin: 20px 0;
+    letter-spacing: 6px;
+}
+
+/* Flash animation */
+.flash-red {
+    background-color: #ffcccc !important;
+}
+
+.flash-green {
+    background-color: #ccffcc !important;
+}
+
+/* Hangman Drawing */
+.hangman {
+    width: 200px;
+    height: 220px;
+    margin: 20px auto;
+    position: relative;
+}
+
+#pole {
+    width: 6px;
+    height: 200px;
+    background: #333;
+    position: absolute;
+    left: 20px;
+}
+
+#head {
+    width: 40px;
+    height: 40px;
+    border: 4px solid black;
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;
+    left: 80px;
+    opacity: 0;
+}
+
+#body, #arm-left, #arm-right, #leg-left, #leg-right {
+    width: 4px;
+    background: black;
+    position: absolute;
+    opacity: 0;
+}
+
+#body {
+    height: 60px;
+    top: 60px;
+    left: 100px;
+}
+
+#arm-left {
+    height: 40px;
+    top: 70px;
+    left: 90px;
+    transform: rotate(-45deg);
+}
+
+#arm-right {
+    height: 40px;
+    top: 70px;
+    left: 110px;
+    transform: rotate(45deg);
+}
+
+#leg-left {
+    height: 50px;
+    top: 110px;
+    left: 95px;
+    transform: rotate(-30deg);
+}
+
+#leg-right {
+    height: 50px;
+    top: 110px;
+    left: 105px;
+    transform: rotate(30deg);
+}
+
+/* Smooth appearance animation */
+.reveal {
+    animation: appear 0.6s forwards;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}
