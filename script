@@ -1,0 +1,108 @@
+// Sound effects
+const soundCorrect = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3");
+const soundWrong = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-buzz-954.mp3");
+const soundWin = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-cheering-crowd-loud-602.mp3");
+const soundLose = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-sad-game-over-trombone-471.mp3");
+
+const words = ["javascript", "hangman", "program", "galaxy", "puzzle", "computer", "function"];
+
+let chosenWord = "";
+let displayWord = [];
+let lives = 10;
+
+// Start game
+function startGame() {
+    const difficulty = document.getElementById("difficulty").value;
+
+    if (difficulty === "easy") lives = 10;
+    if (difficulty === "medium") lives = 7;
+    if (difficulty === "hard") lives = 5;
+
+    chosenWord = words[Math.floor(Math.random() * words.length)];
+    displayWord = Array(chosenWord.length).fill("_");
+    document.getElementById("wordDisplay").textContent = displayWord.join(" ");
+
+    document.getElementById("livesText").textContent = "Lives: " + lives;
+    document.getElementById("message").textContent = "";
+
+    resetHangman();
+}
+
+// Handle guess
+function makeGuess() {
+    const input = document.getElementById("guessInput");
+    const letter = input.value.toLowerCase();
+
+    if (!letter.match(/[a-z]/) || letter.length !== 1) return;
+
+    input.value = "";
+
+    if (chosenWord.includes(letter)) {
+        soundCorrect.play();
+        flash("green");
+
+        chosenWord.split("").forEach((char, index) => {
+            if (char === letter) displayWord[index] = letter;
+        });
+    } else {
+        soundWrong.play();
+        flash("red");
+
+        lives--;
+        document.getElementById("livesText").textContent = "Lives: " + lives;
+        revealNextBodyPart();
+    }
+
+    document.getElementById("wordDisplay").textContent = displayWord.join(" ");
+
+    checkGameEnd();
+}
+
+// Flash green/red feedback
+function flash(color) {
+    const box = document.querySelector(".game-container");
+
+    box.classList.add(color === "red" ? "flash-red" : "flash-green");
+
+    setTimeout(() => {
+        box.classList.remove("flash-red", "flash-green");
+    }, 300);
+}
+
+// Hangman reveal animation
+let step = 0;
+const parts = ["head", "body", "arm-left", "arm-right", "leg-left", "leg-right"];
+
+function resetHangman() {
+    step = 0;
+    parts.forEach(part => {
+        const el = document.getElementById(part);
+        el.classList.add("hidden");
+        el.style.opacity = 0;
+    });
+}
+
+function revealNextBodyPart() {
+    if (step < parts.length) {
+        const el = document.getElementById(parts[step]);
+        el.classList.remove("hidden");
+        el.classList.add("reveal");
+        step++;
+    }
+}
+
+// End of game
+function checkGameEnd() {
+    if (!displayWord.includes("_")) {
+        soundWin.play();
+        document.getElementById("message").textContent = "🎉 You Win!";
+    }
+
+    if (lives <= 0) {
+        soundLose.play();
+        document.getElementById("message").textContent = "💀 Game Over! The word was: " + chosenWord;
+    }
+}
+
+// Start on load
+startGame();
